@@ -1,6 +1,6 @@
 import waldo from "../assets/waldo.jpeg";
 import "./Picture.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 // Waldo is between 1133 and 1193 on the pageX axis
 // and 667 / 731 on the pageY axis
@@ -8,11 +8,39 @@ import { useState } from "react";
 
 export default function Picture() {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
+  const [characters, setCharacters] = useState();
+
+  async function getCharacters() {
+    try {
+      const response = await fetch(`http://localhost:8080`);
+      const characters = await response.json();
+      setCharacters(characters);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
+  useEffect(() => {
+    getCharacters();
+  }, []);
 
   function targetBox(x, y) {
     setCoordinates({ x: x, y: y });
+    checkMatch(coordinates.x, coordinates.y);
   }
-  console.log(coordinates);
+
+  function checkMatch(x, y) {
+    if (
+      characters[0].x_location - x < 15 &&
+      characters[0].x_location - x > -15 &&
+      characters[0].y_location - y < 25 &&
+      characters[0].y_location - y > -35
+    ) {
+      console.log("match");
+    } else {
+      console.log("no match");
+    }
+  }
 
   return (
     <>

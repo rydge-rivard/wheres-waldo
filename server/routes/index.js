@@ -1,9 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const character_controller = require("../controllers/characterController");
 
-/* GET home page. */
-router.get("/", function (req, res, next) {
-  res.render("index", { title: "Express" });
-});
+router.get("/", character_controller.index);
 
 module.exports = router;
