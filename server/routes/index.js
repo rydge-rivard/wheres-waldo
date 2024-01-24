@@ -8,7 +8,7 @@ const score_controller = require("../controllers/scoreController");
 router.get("/", character_controller.index);
 
 // Score
-router.get("/score", score_controller.score_get);
+router.get("/scores", score_controller.score_get);
 
 // Game
 router.post("/game", game_controller.game_new);

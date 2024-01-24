@@ -54,11 +54,6 @@ export default function Picture() {
     }
   }
 
-  useEffect(() => {
-    getCharacters();
-    postNewGame({ start: Date() });
-  }, []);
-
   function targetBox(x, y) {
     setCoordinates({ x: x, y: y });
   }
@@ -84,6 +79,11 @@ export default function Picture() {
   }
 
   checkMatch(coordinates.x, coordinates.y);
+
+  useEffect(() => {
+    getCharacters();
+    postNewGame({ start: Date() });
+  }, []);
 
   return (
     <>
