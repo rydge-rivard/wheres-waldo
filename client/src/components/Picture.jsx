@@ -2,13 +2,11 @@ import waldo from "../assets/waldo.jpeg";
 import "./Picture.css";
 import { useState, useEffect } from "react";
 
-// Waldo is between 1133 and 1193 on the pageX axis
-// and 667 / 731 on the pageY axis
-// if click is in that box, then the game is won
-
 export default function Picture() {
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
-  const [characters, setCharacters] = useState();
+  const [characters, setCharacters] = useState([
+    { x_location: undefined, y_location: undefined },
+  ]);
 
   async function getCharacters() {
     try {
@@ -26,7 +24,6 @@ export default function Picture() {
 
   function targetBox(x, y) {
     setCoordinates({ x: x, y: y });
-    checkMatch(coordinates.x, coordinates.y);
   }
 
   function checkMatch(x, y) {
@@ -36,11 +33,13 @@ export default function Picture() {
       characters[0].y_location - y < 25 &&
       characters[0].y_location - y > -35
     ) {
-      console.log("match");
+      alert("You found Waldo!");
     } else {
-      console.log("no match");
+      console.log("No match.");
     }
   }
+
+  checkMatch(coordinates.x, coordinates.y);
 
   return (
     <>
