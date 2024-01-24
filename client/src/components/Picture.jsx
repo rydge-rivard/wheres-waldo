@@ -3,6 +3,7 @@ import "./Picture.css";
 import { useState, useEffect } from "react";
 
 export default function Picture() {
+  const [game, setGame] = useState();
   const [coordinates, setCoordinates] = useState({ x: 0, y: 0 });
   const [characters, setCharacters] = useState([
     { x_location: undefined, y_location: undefined },
@@ -18,8 +19,27 @@ export default function Picture() {
     }
   }
 
+  async function postNewGame(data) {
+    try {
+      const response = await fetch(`http://localhost:8080/game`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const gameResp = await response.json();
+      console.log(gameResp);
+      setGame(gameResp);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     getCharacters();
+    postNewGame({ start: Date() });
   }, []);
 
   function targetBox(x, y) {
