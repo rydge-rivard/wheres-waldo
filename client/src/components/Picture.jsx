@@ -70,11 +70,17 @@ export default function Picture() {
       characters[0].y_location - y < 25 &&
       characters[0].y_location - y > -35
     ) {
-      alert("You found Waldo!");
-      postGameUpdate({ end: Date(), game: game });
+      resetGame();
     } else {
       console.log("No match.");
     }
+  }
+
+  function resetGame() {
+    alert("You found Waldo!");
+    postGameUpdate({ end: Date(), game: game });
+    postNewGame({ start: Date() });
+    setCoordinates({ x: 0, y: 0 });
   }
 
   checkMatch(coordinates.x, coordinates.y);
