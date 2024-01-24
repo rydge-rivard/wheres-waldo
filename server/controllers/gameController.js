@@ -17,5 +17,7 @@ exports.game_new = asyncHandler(async (req, res, next) => {
 });
 
 exports.game_update = asyncHandler(async (req, res, next) => {
-  const games = await Game.find().exec();
+  const game = await Game.findByIdAndUpdate(req.body.game._id, {
+    end: Date(),
+  });
 });

@@ -37,6 +37,23 @@ export default function Picture() {
     }
   }
 
+  async function postGameUpdate(data) {
+    try {
+      const response = await fetch(`http://localhost:8080/game/won`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const gameResp = await response.json();
+      console.log(gameResp);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     getCharacters();
     postNewGame({ start: Date() });
@@ -54,6 +71,7 @@ export default function Picture() {
       characters[0].y_location - y > -35
     ) {
       alert("You found Waldo!");
+      postGameUpdate({ end: Date(), game: game });
     } else {
       console.log("No match.");
     }
