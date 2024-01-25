@@ -9,6 +9,7 @@ router.get("/", character_controller.index);
 
 // Score
 router.get("/scores", score_controller.score_get);
+router.post("/scores/save", score_controller.score_post);
 
 // Game
 router.post("/game", game_controller.game_new);

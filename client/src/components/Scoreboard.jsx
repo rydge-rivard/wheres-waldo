@@ -20,7 +20,7 @@ export default function Scoreboard() {
   return (
     <>
       <ol>
-        <li>{scores}</li>
+        <li></li>
       </ol>
     </>
   );

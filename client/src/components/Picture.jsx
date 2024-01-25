@@ -30,7 +30,6 @@ export default function Picture() {
       });
 
       const gameResp = await response.json();
-      console.log(gameResp);
       setGame(gameResp);
     } catch (err) {
       console.log(err);
@@ -54,6 +53,23 @@ export default function Picture() {
     }
   }
 
+  async function postNewScore(data) {
+    try {
+      const response = await fetch(`http://localhost:8080/scores/save`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const scoreResp = await response.json();
+      console.log(scoreResp);
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   function targetBox(x, y) {
     setCoordinates({ x: x, y: y });
   }
@@ -66,15 +82,18 @@ export default function Picture() {
       characters[0].y_location - y > -35
     ) {
       resetGame();
-    } else {
-      console.log("No match.");
     }
   }
 
-  function resetGame() {
+  async function resetGame() {
     alert("You found Waldo!");
-    postGameUpdate({ end: Date(), game: game });
-    postNewGame({ start: Date() });
+    const player = prompt("Enter your name to save your high score.");
+    postNewScore({
+      game: game._id,
+      player: player,
+    });
+    postGameUpdate({ end: new Date(), game: game });
+    postNewGame({ start: new Date() });
     setCoordinates({ x: 0, y: 0 });
   }
 
@@ -82,7 +101,7 @@ export default function Picture() {
 
   useEffect(() => {
     getCharacters();
-    postNewGame({ start: Date() });
+    postNewGame({ start: new Date() });
   }, []);
 
   return (

@@ -18,6 +18,6 @@ exports.game_new = asyncHandler(async (req, res, next) => {
 
 exports.game_update = asyncHandler(async (req, res, next) => {
   const game = await Game.findByIdAndUpdate(req.body.game._id, {
-    end: Date(),
+    end: new Date(),
   });
 });
